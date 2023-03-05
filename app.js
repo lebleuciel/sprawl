@@ -10,4 +10,6 @@ app.route('/health').get((req, res) =>
   }),
 )
 
+var router = require('./routes/routes')
+app.use(router)
 exports.routes = app
