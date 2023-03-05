@@ -9,5 +9,4 @@ const startApp = (port) => {
       reject(err)
     })
 }
-
 startApp('3000')
