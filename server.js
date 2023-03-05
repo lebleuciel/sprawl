@@ -1,7 +1,7 @@
 const app = require('./app')
 
 const startApp = (port) => {
-  const server = app.routes
+  const server = app.app
     .listen(port, () => {
       console.log(`app running on port ${port}...`)
     })
@@ -9,4 +9,5 @@ const startApp = (port) => {
       reject(err)
     })
 }
+
 startApp('3000')
