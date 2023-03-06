@@ -1,6 +1,20 @@
 exports.signIn = (req, res) => {
+  const connection = require('../app')
   console.log('hello from signIn!!')
-  res.send('working!!')
+  connection.query(
+    `SELECT * FROM users WHERE id = ${req.body.id} LIMIT 1`,
+    (error, results) => {
+      if (error) {
+        console.error(error)
+      } else {
+        if (results.length > 0) {
+          console.log('Logged User with ID ' + req.body.id + ' in')
+        } else {
+          console.log('User with ID ' + req.body.id + ' does not exist')
+        }
+      }
+    },
+  )
 }
 
 exports.signUp = (req, res) => {
