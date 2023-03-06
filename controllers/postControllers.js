@@ -47,7 +47,7 @@ exports.deposit = (req, res) => {
 
   console.log('hello from deposit!!')
   connection.query(
-    `UPDATE users SET balance = balance + ${req.body.addedcredit} WHERE id = ${req.body.id}`,
+    `UPDATE users SET balance = balance + ${req.body.amount} WHERE id = ${req.body.id}`,
     (error, results) => {
       if (error) {
         console.error(error)
@@ -61,8 +61,20 @@ exports.deposit = (req, res) => {
 }
 
 exports.withdraw = (req, res) => {
-  res.send('working!!')
   console.log('hello from withdraw!!')
+  const connection = require('../app')
+  connection.query(
+    `UPDATE users SET balance = balance - ${req.body.amount} WHERE id = ${req.body.id}`,
+    (error, results) => {
+      if (error) {
+        console.error(error)
+        res.status(500).json({ error: 'Server error' })
+      } else {
+        console.log('updated balance for user with ID:', req.body.id)
+        res.status(200).json({ success: true })
+      }
+    },
+  )
 }
 
 exports.createOrder = (req, res) => {
