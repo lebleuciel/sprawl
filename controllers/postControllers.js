@@ -1,13 +1,12 @@
-exports.signUp = (req, res) => {
-  console.log('hello from signUp!!')
+exports.signIn = (req, res) => {
+  console.log('hello from signIn!!')
   res.send('working!!')
 }
 
-exports.signIn = (req, res) => {
-  const connection = require('../app')
-
-  console.log('hello from signIn!!')
+exports.signUp = (req, res) => {
+  console.log('hello from signUp!!')
   console.log('Request body:', req.body)
+  const connection = require('../app')
 
   const { name, phoneNumber, email, balance, creditcard } = req.body
   const user = {
@@ -44,8 +43,21 @@ exports.forgotPassword = (req, res) => {
 }
 
 exports.deposit = (req, res) => {
-  res.send('working!!')
+  const connection = require('../app')
+
   console.log('hello from deposit!!')
+  connection.query(
+    `UPDATE users SET balance = balance + ${req.body.addedcredit} WHERE id = ${req.body.id}`,
+    (error, results) => {
+      if (error) {
+        console.error(error)
+        res.status(500).json({ error: 'Server error' })
+      } else {
+        console.log('updated balance for user with ID:', req.body.id)
+        res.status(200).json({ success: true })
+      }
+    },
+  )
 }
 
 exports.withdraw = (req, res) => {
