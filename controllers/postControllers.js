@@ -47,8 +47,22 @@ exports.signUp = (req, res) => {
 }
 
 exports.logOut = (req, res) => {
-  res.send('working!!')
   console.log('hello from logOut!!')
+  const connection = require('../app')
+  connection.query(
+    `SELECT * FROM users WHERE id = ${req.body.id} LIMIT 1`,
+    (error, results) => {
+      if (error) {
+        console.error(error)
+      } else {
+        if (results.length > 0) {
+          console.log('Logged User with ID ' + req.body.id + ' out')
+        } else {
+          console.log('User with ID ' + req.body.id + ' does not exist')
+        }
+      }
+    },
+  )
 }
 
 exports.forgotPassword = (req, res) => {
